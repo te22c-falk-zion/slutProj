@@ -5,7 +5,7 @@
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 
-public class Hero 
+public class Character 
 {
     public string Name;
     public float HP;
@@ -65,7 +65,7 @@ public class Hero
             target.HP -=  finalDamage;
         }
     }
-    public void SetAV(Hero target)
+    public void SetAV(Character target)
     {
         target.AV = 10000/target.SPD;
     }

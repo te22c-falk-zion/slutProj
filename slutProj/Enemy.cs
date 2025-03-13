@@ -7,7 +7,7 @@ public class Enemy
     public float SPD;
     public float AV;
 
-    public void Attack(Hero target)
+    public void Attack(Character target)
     {
         target.HP -= ATK;
     }
