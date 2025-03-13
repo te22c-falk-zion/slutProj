@@ -18,7 +18,7 @@ public class Character
     public float SkiMult;
     public float UltMult;
 
-    public void NorAttack(Enemy target)
+    public virtual void NorAttack(Enemy target)
     {
         
         float baseDamage = (NorMult/100)+1 * ATK + Random.Shared.Next(5000,10000);
@@ -35,7 +35,7 @@ public class Character
         }
         
     }
-    public void SkiAttack(Enemy target)
+    public virtual void SkiAttack(Enemy target)
     {
         float baseDamage = (SkiMult/100)+1 * ATK + Random.Shared.Next(5000,10000);
         int roundedCR = (int)Math.Ceiling(CR);
@@ -50,7 +50,7 @@ public class Character
             target.HP -=  finalDamage;
         }
     }
-    public void UltAttack(Enemy target)
+    public virtual void UltAttack(Enemy target)
     {
         float baseDamage = (UltMult/100)+1 * ATK + Random.Shared.Next(5000,10000);
         int roundedCR = (int)Math.Ceiling(CR);
