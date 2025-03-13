@@ -1,19 +1,9 @@
-public class Enemy 
+public class Enemy : Fighter
 {
-    public string Name;
 
-    public float HP;
-    public float ATK;
-    public float SPD;
-    public float AV;
-
-    public void Attack(Character target)
+    public override void Attack(Fighter target)
     {
         target.HP -= ATK;
     }
-    public void SetAV(Enemy target)
-    {
-        target.AV = 10000/target.SPD;
-    }
-    
+
 }

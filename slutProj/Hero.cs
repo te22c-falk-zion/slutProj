@@ -5,20 +5,15 @@
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 
-public class Character 
+public class Hero : Fighter
 {
-    public string Name;
-    public float HP;
-    public float ATK;
     public float CR;
     public float CD;
-    public float SPD;
-    public float AV;
     public float NorMult;
     public float SkiMult;
     public float UltMult;
 
-    public virtual void NorAttack(Enemy target)
+    public override void Attack(Fighter target)
     {
         
         float baseDamage = (NorMult/100)+1 * ATK + Random.Shared.Next(5000,10000);
@@ -64,9 +59,5 @@ public class Character
             float finalDamage = baseDamage;
             target.HP -=  finalDamage;
         }
-    }
-    public void SetAV(Character target)
-    {
-        target.AV = 10000/target.SPD;
     }
 }
