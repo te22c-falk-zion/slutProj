@@ -20,6 +20,7 @@ public class Hero : Fighter
         int roundedCR = (int)Math.Ceiling(CR);
         if (Random.Shared.Next(1,(100/roundedCR)+1) == 1)
         {
+            Console.WriteLine("CRIT!");
             float finalDamage = baseDamage * CD/100+1;
             target.HP -= finalDamage;
         }
@@ -36,6 +37,7 @@ public class Hero : Fighter
         int roundedCR = (int)Math.Ceiling(CR);
         if (Random.Shared.Next(1,(100/roundedCR)+1) == 1)
         {
+            Console.WriteLine("CRIT!");
             float finalDamage = baseDamage * CD/100+1;
             target.HP -= finalDamage;
         }
@@ -51,6 +53,7 @@ public class Hero : Fighter
         int roundedCR = (int)Math.Ceiling(CR);
         if (Random.Shared.Next(1,(100/roundedCR)+1) == 1)
         {
+            Console.WriteLine("CRIT!");
             float finalDamage = baseDamage * (CD/100)+1;
             target.HP -= finalDamage;
         }

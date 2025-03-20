@@ -49,6 +49,10 @@ public class BattleSystem
         Console.WriteLine("1. Normal Attack  2. Skill Attack  3. Ultimate Attack");
 
         // Attackerar den förta enemy:n inom listan eftersom jag har inte kommit runt till att skriva kod för att välja. Det kommer senare.
+        
+
+
+        
         Enemy target = fighters.OfType<Enemy>().FirstOrDefault(e => e.HP > 0);
         if (target == null) return;
 

@@ -1,4 +1,4 @@
-public class Fighter 
+public class Fighter
 {
     public string Name;
     public float HP;
