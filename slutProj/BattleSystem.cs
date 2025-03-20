@@ -52,7 +52,8 @@ public class BattleSystem
         Enemy target = fighters.OfType<Enemy>().FirstOrDefault(e => e.HP > 0);
         if (target == null) return;
 
-        
+
+        //While loop så att man inte kan på någpt sätt skriva fel och inte ha sin tur
         while (!choiceString.All(char.IsDigit) && choiceInt >= 4 || choiceInt <= 0)
         {
             choiceString = Console.ReadLine();
@@ -78,6 +79,7 @@ public class BattleSystem
     }
     public void EnemyTurn(Enemy enemy)
     {
+        //Atteckerar första Hero:n i listan fighters. Ska utveckla och göra det slumpmässigt senare.
         Hero target = fighters.OfType<Hero>().FirstOrDefault(h => h.HP > 0);
         if (target == null) return;
 

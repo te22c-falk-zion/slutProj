@@ -7,7 +7,7 @@ using System.Media;
 
 
 
-
+PlayMusic("Reflection.wav");
 Hero player = new Hero { Name = "Player", HP = 100, ATK = 20, SPD = 100, CR = 20, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
 Hero player2 = new Hero { Name = "Player2", HP = 100, ATK = 20, SPD = 89, CR = 20, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
 List<Hero> heroes = new();
@@ -20,7 +20,10 @@ combat.InBattle();
 
 
 
-static void PlayMusic(int song)
+static void PlayMusic(string filename)
 {
-    
+    SoundPlayer musicPlayer = new SoundPlayer();
+    musicPlayer.SoundLocation = filename;
+    musicPlayer.PlayLooping();
 }
+
