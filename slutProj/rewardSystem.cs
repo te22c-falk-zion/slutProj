@@ -46,11 +46,12 @@ public class rewardSystem
         string choiceString = "a";
         int choiceInt = 0;
         string answer = "no";
+        bool loop = true;
         List<Buff> buffs = GenerateBuffs();
 
-        while (true)
+        while (loop == true)
         {
-                
+            
             while (!choiceString.All(char.IsDigit) && choiceInt > buffs.Count || choiceInt <= 0)
             {       
                 Console.WriteLine($"Total Buffs in buffs: {buffs.Count}");
@@ -82,6 +83,11 @@ public class rewardSystem
                 choiceString = "a";
                 choiceInt = 0;
                 Console.Clear();
+            }
+            else if(answer.Equals("yes"))
+            {
+                Console.WriteLine("Adding to inventory...");
+                loop = false;
             }
         }
 

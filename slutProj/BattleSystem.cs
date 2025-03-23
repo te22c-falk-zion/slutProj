@@ -117,5 +117,6 @@ public class BattleSystem
         enemy.Attack(target);
         enemy.AV = 10000/ enemy.SPD;
         Console.WriteLine($"{target.Name}'s HP:{beforeHP} --> {target.HP}");
+        Console.ReadLine();
     }
 }

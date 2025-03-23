@@ -1,6 +1,6 @@
 public class Fighter
 {
-    public string Name;
+    public string Name = "";
     public float HP;
     public float ATK;
     public float SPD;
