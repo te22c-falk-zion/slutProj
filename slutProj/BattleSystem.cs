@@ -95,7 +95,10 @@ public class BattleSystem
                 hero.AV = 10000 / hero.SPD;
                 break;
         }
+        
         Console.WriteLine($"{target.Name}'s HP: {beforeHP} --> {target.HP}");
+        Fighter nextInLine = fighters[1];
+        Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
     }
     public void EnemyTurn(Enemy enemy)
@@ -117,6 +120,8 @@ public class BattleSystem
         enemy.Attack(target);
         enemy.AV = 10000/ enemy.SPD;
         Console.WriteLine($"{target.Name}'s HP:{beforeHP} --> {target.HP}");
+        Fighter nextInLine = fighters[1];
+        Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
     }
 }
