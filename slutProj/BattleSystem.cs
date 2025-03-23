@@ -43,6 +43,7 @@ public class BattleSystem
 
     public void HeroTurn(Hero hero)
     {
+        Console.Clear();
         float beforeHP;
         string choiceString = "a";
         int choiceInt = 10;
@@ -63,7 +64,7 @@ public class BattleSystem
         {
             Console.WriteLine("Pick who to attack. Type in the number corresponding to the enemy.");
             targetString = Console.ReadLine();
-            targetInt = int.TryParse(targetString, out targetInt) ? targetInt : 1;
+            targetInt = int.TryParse(targetString, out targetInt) ? targetInt : 0;
         }
         
         // Det numret du skrev blir subtraherad med 1 för att listan börjar med 0.
@@ -78,7 +79,7 @@ public class BattleSystem
             choiceString = Console.ReadLine();
             choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
         }
-        
+
         switch (choiceInt)
         {
             case 1:
@@ -99,6 +100,7 @@ public class BattleSystem
     }
     public void EnemyTurn(Enemy enemy)
     {
+        Console.Clear();
         float beforeHP;
         
         //Samma som ovan. Skapar en ny lista med levande targets men denna gång med heroes.
