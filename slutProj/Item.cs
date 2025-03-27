@@ -2,6 +2,7 @@ public class Item
 {
     public string Name { get ; set; }
     public string itemBio { get; set; }
+
     public Item (string Name, string bio)
     {
         this.Name = Name;

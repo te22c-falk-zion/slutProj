@@ -8,6 +8,7 @@ public class rewardSystem
 {
    private List<Fighter> fighters;
    private Random random;
+   public Inventory BuffList;
    private List<Buff> buffItems = new List<Buff>
    {
     //Notes for future me!
@@ -36,6 +37,7 @@ public class rewardSystem
     public rewardSystem(List<Hero> heroes, List<Enemy> enemies)
     {
         fighters = new List<Fighter>();
+        BuffList = new Inventory();
         fighters.AddRange(heroes);
         fighters.AddRange(enemies);
         random = new Random();
@@ -86,20 +88,17 @@ public class rewardSystem
             }
             else if(answer.Equals("yes"))
             {
-                Console.WriteLine("Adding to inventory...");
+                
                 loop = false;
             }
         }
+        Console.WriteLine("Adding to inventory...");
+        BuffList.buffs.Add(buffs[choiceInt-1]);
+        Console.WriteLine($"{buffs[choiceInt-1].Name} Added!");
+        BuffList.Display();
 
 
 
-    }
-    public string YellowNumber(string input)
-    {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write($"{input}");
-        Console.ResetColor();
-        return input;
     }
 
     //Skapar en ny lista med en method så vi kan använda den i RewardBuff()

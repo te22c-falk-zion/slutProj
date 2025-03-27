@@ -1,23 +1,27 @@
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 
 public class BattleSystem 
 {
     private List<Fighter> fighters;
-    public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
+    public BattleSystem(List<Hero> heros, List<Enemy> enemies)
     {
         fighters = new List<Fighter>();
-        fighters.AddRange(heroes);
+        fighters.AddRange(heros);
         fighters.AddRange(enemies);
 
-        //Skapar AV värde för allt i fighters listan.
+        //Skapar AV värde för allt i fighters listan.        
         fighters.ForEach(f => f.AV = 10000/f.SPD);
+
     }
 
-    public void InBattle()
+    public void InBattle(rewardSystem reward)
     {   
+        ApplyBuffs(reward);
+        Console.ReadLine();
         //Skapar en while loop för när någon i bege listorna är levande
         while(fighters.Any(h => h is Hero && h.HP > 0) && fighters.Any(e => e is Enemy && e.HP > 0))
         {
@@ -26,7 +30,7 @@ public class BattleSystem
             fighters = fighters.OrderBy(f => f.AV).ToList();
             Fighter currentFighter = fighters.First();
 
-
+            
             // letar inom fighters listan för där f inte är currentfighter och exluderar det från listan. sedan återskapar listan
             // och för allt inom listan (nu finns inte currentfighter) så gör den minus currentFighter.AV på allt.
             fighters.Where(f => f != currentFighter).ToList().ForEach(f => f.AV -= currentFighter.AV);
@@ -123,5 +127,23 @@ public class BattleSystem
         Fighter nextInLine = fighters[1];
         Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
+    }
+
+    public void ApplyBuffs(rewardSystem reward)
+    {
+        List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
+
+        for (int i = 0; i < bufftargets.Count; i++)
+        {
+            for (int y = 0; y < reward.BuffList.buffs.Count; y++)
+            {
+                bufftargets[i].SPD += reward.BuffList.buffs[y].SPDbuff;
+                bufftargets[i].CR += reward.BuffList.buffs[y].CRbuff;
+                bufftargets[i].CD += reward.BuffList.buffs[y].CDbuff;
+                bufftargets[i].ATK *= reward.BuffList.buffs[y].ATKbuff/100;
+                bufftargets[i].HP *= reward.BuffList.buffs[y].HPbuff/100;
+            }
+        }
+
     }
 }
