@@ -41,6 +41,7 @@ public class BattleSystem
             else if (currentFighter is Enemy enemy)
                 EnemyTurn(enemy);
         }
+        RemoveBuffs(reward);
     }
 
 
@@ -53,17 +54,20 @@ public class BattleSystem
         int choiceInt = 10;
         string targetString = "a";
         int targetInt = 1;
-        Console.WriteLine($"It is {hero.Name}'s turn!");
+        
 
         // skapar en ny lista och söker igenom fighters listan för enemy klassen. Dom som de hittar blir då
         // tillagd inom den nya listan
         List<Enemy> aliveTargets = fighters.OfType<Enemy>().Where(e => e.HP > 0).ToList();
+
         
-        DisplayFighters();
     
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
         while (!targetString.All(char.IsDigit) || targetInt <= 0 || targetInt >= aliveTargets.Count +1)
         {
+            Console.Clear();
+            Console.WriteLine($"It is {hero.Name}'s turn!");
+            DisplayFighters();
             Console.WriteLine("Pick who to attack. Type in the number corresponding to the enemy.");
             targetString = Console.ReadLine();
             targetInt = int.TryParse(targetString, out targetInt) ? targetInt : 0;
@@ -106,6 +110,7 @@ public class BattleSystem
     public void EnemyTurn(Enemy enemy)
     {
         Console.Clear();
+        
         float beforeHP;
         
         //Samma som ovan. Skapar en ny lista med levande targets men denna gång med heroes.
@@ -116,6 +121,7 @@ public class BattleSystem
         if (target == null) return;
 
         Console.WriteLine($"It is {enemy.Name}'s turn!");
+        DisplayFighters();
         Console.WriteLine($"{enemy.Name} attacks {target.Name}");
         Console.ReadLine();
 
@@ -138,8 +144,25 @@ public class BattleSystem
                 bufftargets[i].SPD += reward.BuffList.buffs[y].SPDbuff;
                 bufftargets[i].CR += reward.BuffList.buffs[y].CRbuff;
                 bufftargets[i].CD += reward.BuffList.buffs[y].CDbuff;
-                bufftargets[i].ATK *= reward.BuffList.buffs[y].ATKbuff/100;
-                bufftargets[i].HP *= reward.BuffList.buffs[y].HPbuff/100;
+                bufftargets[i].ATK += reward.BuffList.buffs[y].ATKbuff/100 * bufftargets[i].ATK;
+                bufftargets[i].HP += reward.BuffList.buffs[y].HPbuff/100 * bufftargets[i].HP;
+            }
+        }
+
+    }
+    public void RemoveBuffs(rewardSystem reward)
+    {
+        List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
+
+        for (int i = 0; i < bufftargets.Count; i++)
+        {
+            for (int y = 0; y < reward.BuffList.buffs.Count; y++)
+            {
+                bufftargets[i].SPD -= reward.BuffList.buffs[y].SPDbuff;
+                bufftargets[i].CR -= reward.BuffList.buffs[y].CRbuff;
+                bufftargets[i].CD -= reward.BuffList.buffs[y].CDbuff;
+                bufftargets[i].ATK = bufftargets[i].ATK/((reward.BuffList.buffs[y].ATKbuff/100)+1);
+                bufftargets[i].HP = bufftargets[i].HP/((reward.BuffList.buffs[y].HPbuff/100)+1);
             }
         }
 

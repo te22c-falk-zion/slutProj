@@ -14,21 +14,21 @@ public class rewardSystem
     //Notes for future me!
     //Speed is additive, CR is additive, CD is additive,
     //ATK is multiplicitive, HP is multiplicitave.
-    new Buff("Air Jordans",15,0,0,500,500,
+    new Buff("Air Jordans",15,0,0,5,5,
     $"These boots gives your team +15 SPD as well as +5% HP & ATK."),
-    new Buff("Lens-Maker's Glasses",0,7,10,100,100,
+    new Buff("Lens-Maker's Glasses",0,7,10,0,0,
     "These glasses gives your team +7 CR as well as +10 CD."),
     new Buff("Compact Nuke",0,0,75,0,0,
     "A compact nuke that increases CD by +75%"),
-    new Buff("Portable Tank",0,0,20,2000,3000,
+    new Buff("Portable Tank",0,0,20,20,30,
     "If they're so strong why not carry them?\nIncreases CD by +20%, ATK by +20% and HP by +30%"),
-    new Buff("Just ATK",0,0,0,4000,0,
+    new Buff("Just ATK",0,0,0,40,0,
     "What? It's just ATK.\n Increases ATK by 40%"),
-    new Buff("It's my turn.",40,0,0,100,100,
+    new Buff("It's my turn.",40,0,0,0,0,
     "Ha ha ha, one!\n Increases SPD by +40 for all teammates"),
-    new Buff("Filler",0,5,10,200,200,
+    new Buff("Filler",0,5,10,2,2,
     "It's just here.. I guess?\n Increases CR by 5%, CD by 10%, ATK by 2% and HP by 2%."),
-    new Buff("Dev Spec",100,50,300,20000,100,
+    new Buff("Dev Spec",100,50,300,200,0,
     "You aren't supposed to have this...\n +100 SPD, +50 CR, +300 CD, +200% ATK")
    };
 
