@@ -62,6 +62,7 @@ public class BattleSystem
         {
             Console.WriteLine($"{i+1}. {aliveTargets[i].Name}: {aliveTargets[i].HP} HP");
         }
+        DisplayFighters();
     
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
         while (!targetString.All(char.IsDigit) || targetInt <= 0 || targetInt >= aliveTargets.Count +1)
@@ -145,5 +146,20 @@ public class BattleSystem
             }
         }
 
+    }
+    public void DisplayFighters()
+    {
+        List<Enemy> Enemies = fighters.OfType<Enemy>().Where(e => e.HP > 0).ToList();
+        List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.HP > 0).ToList();
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            Console.Write($"{i}. {Enemies[i].Name}");
+        }
+        Console.WriteLine();
+        for (int i = 0; i < Heroes.Count; i++)
+        {
+            Console.Write($"{i}. {Heroes[i].Name}");
+        }
+        Console.WriteLine();
     }
 }
