@@ -7,10 +7,10 @@ using System.Runtime.CompilerServices;
 public class BattleSystem 
 {
     private List<Fighter> fighters;
-    public BattleSystem(List<Hero> heros, List<Enemy> enemies)
+    public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
     {
         fighters = new List<Fighter>();
-        fighters.AddRange(heros);
+        fighters.AddRange(heroes);
         fighters.AddRange(enemies);
 
         //Skapar AV värde för allt i fighters listan.        
