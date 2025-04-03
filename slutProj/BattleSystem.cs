@@ -58,10 +58,7 @@ public class BattleSystem
         // skapar en ny lista och söker igenom fighters listan för enemy klassen. Dom som de hittar blir då
         // tillagd inom den nya listan
         List<Enemy> aliveTargets = fighters.OfType<Enemy>().Where(e => e.HP > 0).ToList();
-        for (int i = 0; i < aliveTargets.Count; i++)
-        {
-            Console.WriteLine($"{i+1}. {aliveTargets[i].Name}: {aliveTargets[i].HP} HP");
-        }
+        
         DisplayFighters();
     
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
@@ -153,13 +150,13 @@ public class BattleSystem
         List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.HP > 0).ToList();
         for (int i = 0; i < Enemies.Count; i++)
         {
-            Console.Write($"{i}. {Enemies[i].Name}");
+            Console.Write($"{i+1}. {Enemies[i].Name}: {Enemies[i].HP}HP ");
         }
-        Console.WriteLine();
-        for (int i = 0; i < Heroes.Count; i++)
+        Console.WriteLine("\n");
+        for (int y = 0; y < Heroes.Count; y++)
         {
-            Console.Write($"{i}. {Heroes[i].Name}");
+            Console.Write($"{y+1}. {Heroes[y].Name}: {Heroes[y].HP}HP ");
         }
-        Console.WriteLine();
+        Console.WriteLine("\n");
     }
 }
