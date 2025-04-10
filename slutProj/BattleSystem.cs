@@ -15,7 +15,6 @@ public class BattleSystem
 
         //Skapar AV värde för allt i fighters listan.        
         fighters.ForEach(f => f.AV = 10000/f.SPD);
-
     }
 
     public void InBattle(rewardSystem reward)
@@ -146,6 +145,7 @@ public class BattleSystem
                 bufftargets[i].CD += reward.BuffList.buffs[y].CDbuff;
                 bufftargets[i].ATK += reward.BuffList.buffs[y].ATKbuff/100 * bufftargets[i].ATK;
                 bufftargets[i].HP += reward.BuffList.buffs[y].HPbuff/100 * bufftargets[i].HP;
+                bufftargets[i].maxHP += reward.BuffList.buffs[y].HPbuff/100 * bufftargets[i].maxHP;
             }
         }
 
@@ -163,6 +163,7 @@ public class BattleSystem
                 bufftargets[i].CD -= reward.BuffList.buffs[y].CDbuff;
                 bufftargets[i].ATK = bufftargets[i].ATK/((reward.BuffList.buffs[y].ATKbuff/100)+1);
                 bufftargets[i].HP = bufftargets[i].HP/((reward.BuffList.buffs[y].HPbuff/100)+1);
+                bufftargets[i].maxHP = bufftargets[i].maxHP/((reward.BuffList.buffs[y].HPbuff/100)+1);
             }
         }
 

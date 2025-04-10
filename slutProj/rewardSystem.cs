@@ -71,11 +71,9 @@ public class rewardSystem
                 Console.WriteLine($"Total Buffs in buffItems: {buffs.Count}");
                 choiceString = Console.ReadLine();
                 choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
-                     
-
+                Console.Clear();
             }
 
-            Console.Clear();
             Console.WriteLine($"{buffs[choiceInt-1].Name}\n\n{buffs[choiceInt-1].itemBio}");
             Console.WriteLine($"Do you want to pick up this item? Yes/No");
             answer = Console.ReadLine().Trim().ToLower();

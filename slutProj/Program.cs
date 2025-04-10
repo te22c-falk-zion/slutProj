@@ -3,17 +3,15 @@ using System.Media;
 using System.Runtime.CompilerServices;
 
 
-// PlayMusic("Reflection.wav");
-
-List<Enemy> enemies = new List<Enemy> { new Enemy { Name = "Goblin", HP = 50000, ATK = 10, SPD = 90 }, new Enemy { Name = "Goblin2", HP = 50000, ATK = 10, SPD = 90 } };
-Hero player = new Hero { Name = "Player", HP = 3000, ATK = 2000, SPD = 100, CR = 80, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
-Hero player2 = new Hero { Name = "Player2", HP = 3000, ATK = 2000, SPD = 89, CR = 20, CD = 300, NorMult = 100, SkiMult = 200, UltMult = 400 };
+List<Enemy> enemies = new List<Enemy>(); 
+Hero player = new Hero { Name = "Player", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 100, CR = 80, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
+Hero player2 = new Hero { Name = "Player2", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 89, CR = 20, CD = 300, NorMult = 100, SkiMult = 200, UltMult = 400 };
 
 List<Hero> heroes = new();
 heroes.Add(player);
 heroes.Add(player2);
 rewardSystem reward = new rewardSystem(heroes, enemies);
-BattleSystem combat = new BattleSystem(heroes, enemies);
+OccuranceSystem occurance = new OccuranceSystem(heroes, reward);
 
 int stage = 1;
 bool gameLoop = true;
@@ -28,7 +26,7 @@ while (gameLoop == true)
     int TutorialInt = 10;
 
     while (!choiceString.All(char.IsDigit) && choiceInt >= 5 || choiceInt <= 0)
-    {    
+    {   
         Console.Clear();
         Console.WriteLine($"Stage: {stage}");
         Console.WriteLine("What would you like to do?");
@@ -43,8 +41,18 @@ while (gameLoop == true)
     switch (choiceInt)
     {
         case 1:
-            combat.InBattle(reward);
+            occurance.OccuranceStart();
+            enemies.AddRange(new List<Enemy>
+            {
+                new Enemy { Name = "Goblin", HP = 25000, ATK = 100, SPD = 90},
+                new Enemy { Name = "Goblin2", HP = 25000, ATK = 100, SPD = 90}
+            });
+            enemies.ForEach(e => e.LevelUp(stage));
+            BattleSystem combat = new BattleSystem(heroes, enemies);
+            combat.InBattle(reward);            
             reward.RewardBuff();
+            stage++;
+            occurance.OccuranceStart();
         break;
         case 2:
             reward.BuffList.Display();
@@ -53,11 +61,13 @@ while (gameLoop == true)
             while(!tutorialString.All(char.IsDigit) && TutorialInt >= 6 || choiceInt <= 0)
             {
             Console.WriteLine("What do you need help with?");
-            Console.WriteLine("If you want to see the entire Turorial again type 1.");
+            Console.WriteLine("If you want to see the Entire Turorial again type 1.");
             Console.WriteLine("If you want to see the Game Description again type 2.");
             Console.WriteLine("If you want to see the Normal Attack again type 3.");
             Console.WriteLine("If you want to see the Skill Attack again type 4.");
             Console.WriteLine("If you want to see the Ultimate Attack again type 5.");
+            Console.WriteLine("If you want to see the Buff Tutorial again type 6.");
+            Console.WriteLine("If you want to see the Occurance Tutorial again type 7.");
             tutorialString = Console.ReadLine();
             TutorialInt = int.TryParse(tutorialString, out TutorialInt) ? TutorialInt : 0;
             }
@@ -74,19 +84,12 @@ Console.WriteLine("Goodbye!");
 Console.ReadLine();
 
 
-// static void PlayMusic(string filename)
-// {
-//     SoundPlayer musicPlayer = new SoundPlayer();
-//     musicPlayer.SoundLocation = filename;
-//     musicPlayer.PlayLooping();
-// }
-
 void Tutorial(int var)
 {   
         
     if (var == 1 || var == 2)
     {
-        Console.WriteLine("Welcome to NOT star rail");
+        Console.WriteLine("-- Welcome to NOT star rail --");
         Console.WriteLine("In this game you will fight against enemies until both your hereos are dead.");
         Console.WriteLine("Clearing a wave will reward you with a selection of buffs to choose from.");
         Console.ReadLine(); 
@@ -110,6 +113,20 @@ void Tutorial(int var)
         Console.WriteLine("-- Ultimate Attack --");
         Console.WriteLine("Using attacks and getting hit will generate a heroes Ultimate Enegy");
         Console.WriteLine("When Ultimate Energy is full a hero can use their Ultimate Attack to deal HUGE damage to enemies!");
+        Console.ReadLine();
+    }
+    if (var == 1 || var == 6)
+    {
+        Console.WriteLine("-- Buffs --");
+        Console.WriteLine("Buffs are items picked up that increase the strenght of your heroes.");
+        Console.WriteLine("Buffs can be obtained randomly in occurances or when winning battles.");
+        Console.ReadLine();
+    }
+    if (var == 1 || var == 7)
+    {
+        Console.WriteLine("-- Occurances --");
+        Console.WriteLine("Occurances randomly occur on either the start or end of your figths.");
+        Console.WriteLine("Occurances can either heal, buff or nerf you depending on what you get.");
         Console.ReadLine();
     }
 }
