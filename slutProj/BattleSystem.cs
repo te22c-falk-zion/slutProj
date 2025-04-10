@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 public class BattleSystem 
 {
     private List<Fighter> fighters;
+    private float ultEnergy = 0;
+    private int skillPoints = 3;
     public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
     {
         fighters = new List<Fighter>();
@@ -19,6 +21,7 @@ public class BattleSystem
 
     public void InBattle(rewardSystem reward)
     {   
+        skillPoints = 3;
         ApplyBuffs(reward);
         Console.ReadLine();
         //Skapar en while loop för när någon i bege listorna är levande
@@ -75,14 +78,29 @@ public class BattleSystem
         // Det numret du skrev blir subtraherad med 1 för att listan börjar med 0.
         Enemy target = aliveTargets[targetInt-1];
         beforeHP = target.HP;
-        
-        Console.WriteLine("1. Normal Attack  2. Skill Attack  3. Ultimate Attack");
 
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
         while (!choiceString.All(char.IsDigit) && choiceInt >= 4 || choiceInt <= 0)
-        {
+        {       
+            Console.WriteLine($"Skill points:{skillPoints} || Energy: {ultEnergy}");
+            Console.WriteLine("1. Normal Attack  2. Skill Attack  3. Ultimate Attack");
+
             choiceString = Console.ReadLine();
             choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
+            if (skillPoints <= 0 && choiceInt == 2) 
+            {
+                choiceInt = 10; 
+                Console.WriteLine("You do not have enough skill points to use skill!"); 
+                Console.WriteLine("Get skill points by using basic attacks.");
+                Console.ReadLine();
+            }
+            if (ultEnergy >= 100 && choiceInt == 3)
+            {
+                choiceInt = 10;
+                Console.WriteLine("You do not have enough Ult Energy to Use Ultimate!"); 
+                Console.WriteLine("Get Energy by using attacks and being attacked!");
+                Console.ReadLine();
+            }
         }
 
         switch (choiceInt)
@@ -90,14 +108,19 @@ public class BattleSystem
             case 1:
                 hero.Attack(target);
                 hero.AV = 10000 / hero.SPD;
+                skillPoints++;
+                ultEnergy += 10;
                 break;
             case 2:
                 hero.SkiAttack(target);
                 hero.AV = 10000 / hero.SPD;
+                skillPoints--;
+                ultEnergy += 25;
                 break;
             case 3:
                 hero.UltAttack(target);
                 hero.AV = 10000 / hero.SPD;
+                ultEnergy -= 100;
                 break;
         }
         
@@ -126,6 +149,7 @@ public class BattleSystem
 
         enemy.Attack(target);
         enemy.AV = 10000/ enemy.SPD;
+        ultEnergy += 15;
         Console.WriteLine($"{target.Name}'s HP:{beforeHP} --> {target.HP}");
         Fighter nextInLine = fighters[1];
         Console.WriteLine($"Next turn goes to {nextInLine.Name}!");

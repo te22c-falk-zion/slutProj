@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 
 
 List<Enemy> enemies = new List<Enemy>(); 
-Hero player = new Hero { Name = "Player", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 100, CR = 80, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
-Hero player2 = new Hero { Name = "Player2", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 89, CR = 20, CD = 300, NorMult = 100, SkiMult = 200, UltMult = 400 };
+Hero player = new Hero { Name = "Seele", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 100, CR = 80, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
+Hero player2 = new Hero { Name = "Yanqing", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 89, CR = 20, CD = 300, NorMult = 100, SkiMult = 200, UltMult = 400 };
 
 List<Hero> heroes = new();
 heroes.Add(player);
