@@ -71,6 +71,7 @@ public class BattleSystem
             Console.Clear();
             Console.WriteLine($"It is {hero.Name}'s turn!");
             DisplayFighters();
+            Console.WriteLine($"Skill points:{skillPoints} || {hero.Name}'s Energy: {hero.ultEnergy}");
             Console.WriteLine("Pick who to attack. Type in the number corresponding to the enemy.");
             targetString = Console.ReadLine();
             targetInt = int.TryParse(targetString, out targetInt) ? targetInt : 0;
@@ -83,7 +84,6 @@ public class BattleSystem
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
         while (!choiceString.All(char.IsDigit) && choiceInt >= 4 || choiceInt <= 0)
         {       
-            Console.WriteLine($"Skill points:{skillPoints} || {hero.Name}'s Energy: {hero.ultEnergy}");
             Console.WriteLine("1. Normal Attack  2. Skill Attack  3. Ultimate Attack");
 
             choiceString = Console.ReadLine();

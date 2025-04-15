@@ -25,7 +25,7 @@ public class OccuranceSystem {
                 List<Hero> healTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
                 for (int i = 0; i < healTargets.Count; i++)
                 {
-                    Console.Write($"{healTargets[i].HP} -->");
+                    Console.Write($"{healTargets[i].Name}: {healTargets[i].HP} -->");
                     healTargets[i].HP = healTargets[i].maxHP;
                     Console.WriteLine($"{healTargets[i].maxHP}");
                     Console.ReadLine();
