@@ -21,7 +21,7 @@ public class BattleSystem
 
     public void InBattle(rewardSystem reward)
     {   
-        skillPoints = 3;
+        skillPoints = 0;
         ApplyBuffs(reward);
         Console.ReadLine();
         //Skapar en while loop för när någon i bege listorna är levande
@@ -56,6 +56,7 @@ public class BattleSystem
         int choiceInt = 10;
         string targetString = "a";
         int targetInt = 1;
+        bool attacklanded = false;
         
 
         // skapar en ny lista och söker igenom fighters listan för enemy klassen. Dom som de hittar blir då
@@ -87,47 +88,60 @@ public class BattleSystem
 
             choiceString = Console.ReadLine();
             choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
-            if (skillPoints <= 0 && choiceInt == 2) 
+            switch (choiceInt)
             {
-                choiceInt = 10; 
-                Console.WriteLine("You do not have enough skill points to use skill!"); 
-                Console.WriteLine("Get skill points by using basic attacks.");
-                Console.ReadLine();
-            }
-            if (ultEnergy >= 100 && choiceInt == 3)
-            {
-                choiceInt = 10;
-                Console.WriteLine("You do not have enough Ult Energy to Use Ultimate!"); 
-                Console.WriteLine("Get Energy by using attacks and being attacked!");
-                Console.ReadLine();
+                case 1:
+                    hero.Attack(target);
+                    hero.AV = 10000 / hero.SPD;
+                    skillPoints++;
+                    ultEnergy += 10;
+                    attacklanded = true;
+                    break;
+                case 2:
+                    if (skillPoints <= 0) 
+                    {
+                        choiceInt = 10; 
+                        Console.WriteLine("You do not have enough skill points to use skill!"); 
+                        Console.WriteLine("Get skill points by using basic attacks.");
+                        Console.ReadLine();
+                    }
+                    if (skillPoints > 0) 
+                    {
+                        hero.SkiAttack(target);
+                        hero.AV = 10000 / hero.SPD;
+                        skillPoints--;
+                        ultEnergy += 25;
+                        attacklanded = true;
+                    }
+                    break;
+                case 3:          
+                    if (ultEnergy <= 100)
+                    {
+                        choiceInt = 10;
+                        Console.WriteLine("You do not have enough Ult Energy to Use Ultimate!"); 
+                        Console.WriteLine("Get Energy by using attacks and being attacked!");
+                        Console.ReadLine();
+                    }
+                    if(ultEnergy >= 100)
+                    {
+                        hero.UltAttack(target);
+                        hero.AV = 10000 / hero.SPD;
+                        ultEnergy -= 100;
+                        attacklanded = true;
+                    }
+                    break;
             }
         }
 
-        switch (choiceInt)
-        {
-            case 1:
-                hero.Attack(target);
-                hero.AV = 10000 / hero.SPD;
-                skillPoints++;
-                ultEnergy += 10;
-                break;
-            case 2:
-                hero.SkiAttack(target);
-                hero.AV = 10000 / hero.SPD;
-                skillPoints--;
-                ultEnergy += 25;
-                break;
-            case 3:
-                hero.UltAttack(target);
-                hero.AV = 10000 / hero.SPD;
-                ultEnergy -= 100;
-                break;
-        }
+
         
+        if (attacklanded == true)
+        {
         Console.WriteLine($"{target.Name}'s HP: {beforeHP} --> {target.HP}");
         Fighter nextInLine = fighters[1];
         Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
+        }
     }
     public void EnemyTurn(Enemy enemy)
     {
