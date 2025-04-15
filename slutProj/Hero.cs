@@ -12,6 +12,7 @@ public class Hero : Fighter
     public float NorMult;
     public float SkiMult;
     public float UltMult;
+    public float ultEnergy;
 
     public override void Attack(Fighter target)
     {

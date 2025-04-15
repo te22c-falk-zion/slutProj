@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 public class BattleSystem 
 {
     private List<Fighter> fighters;
-    private float ultEnergy = 0;
     private int skillPoints = 3;
     public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
     {
@@ -21,7 +20,7 @@ public class BattleSystem
 
     public void InBattle(rewardSystem reward)
     {   
-        skillPoints = 0;
+        skillPoints = 3;
         ApplyBuffs(reward);
         Console.ReadLine();
         //Skapar en while loop för när någon i bege listorna är levande
@@ -29,7 +28,7 @@ public class BattleSystem
         {
             //Anordnar fighters listan från lägst AV value och sen gör det till listan.
             // Den figther som har lägst AV kommer att bli nämnd till currentFigther
-            fighters = fighters.OrderBy(f => f.AV).ToList();
+            fighters = fighters.Where(f => f.HP > 0).OrderBy(f => f.AV).ToList();
             Fighter currentFighter = fighters.First();
 
             
@@ -51,6 +50,7 @@ public class BattleSystem
     public void HeroTurn(Hero hero)
     {
         Console.Clear();
+        if (skillPoints > 5) skillPoints = 5;
         float beforeHP;
         string choiceString = "a";
         int choiceInt = 10;
@@ -61,7 +61,7 @@ public class BattleSystem
 
         // skapar en ny lista och söker igenom fighters listan för enemy klassen. Dom som de hittar blir då
         // tillagd inom den nya listan
-        List<Enemy> aliveTargets = fighters.OfType<Enemy>().Where(e => e.HP > 0).ToList();
+        List<Enemy> aliveTargets = fighters.OfType<Enemy>().Where(e => e.HP > 0).OrderBy(e => e.Name).ToList();
 
         
     
@@ -83,7 +83,7 @@ public class BattleSystem
         //While loop så att man inte kan på något sätt skriva fel och inte ha sin tur
         while (!choiceString.All(char.IsDigit) && choiceInt >= 4 || choiceInt <= 0)
         {       
-            Console.WriteLine($"Skill points:{skillPoints} || Energy: {ultEnergy}");
+            Console.WriteLine($"Skill points:{skillPoints} || {hero.Name}'s Energy: {hero.ultEnergy}");
             Console.WriteLine("1. Normal Attack  2. Skill Attack  3. Ultimate Attack");
 
             choiceString = Console.ReadLine();
@@ -94,7 +94,7 @@ public class BattleSystem
                     hero.Attack(target);
                     hero.AV = 10000 / hero.SPD;
                     skillPoints++;
-                    ultEnergy += 10;
+                    hero.ultEnergy += 10;
                     attacklanded = true;
                     break;
                 case 2:
@@ -110,23 +110,23 @@ public class BattleSystem
                         hero.SkiAttack(target);
                         hero.AV = 10000 / hero.SPD;
                         skillPoints--;
-                        ultEnergy += 25;
+                        hero.ultEnergy += 25;
                         attacklanded = true;
                     }
                     break;
                 case 3:          
-                    if (ultEnergy <= 100)
+                    if (hero.ultEnergy <= 100)
                     {
                         choiceInt = 10;
                         Console.WriteLine("You do not have enough Ult Energy to Use Ultimate!"); 
                         Console.WriteLine("Get Energy by using attacks and being attacked!");
                         Console.ReadLine();
                     }
-                    if(ultEnergy >= 100)
+                    if(hero.ultEnergy >= 100)
                     {
                         hero.UltAttack(target);
                         hero.AV = 10000 / hero.SPD;
-                        ultEnergy -= 100;
+                        hero.ultEnergy -= 100;
                         attacklanded = true;
                     }
                     break;
@@ -141,6 +141,7 @@ public class BattleSystem
         Fighter nextInLine = fighters[1];
         Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
+        Console.Clear();
         }
     }
     public void EnemyTurn(Enemy enemy)
@@ -163,11 +164,12 @@ public class BattleSystem
 
         enemy.Attack(target);
         enemy.AV = 10000/ enemy.SPD;
-        ultEnergy += 15;
-        Console.WriteLine($"{target.Name}'s HP:{beforeHP} --> {target.HP}");
+        target.ultEnergy += 15;
+        Console.WriteLine($"{target.Name}'s HP:{beforeHP} --> {target.HP}\n{target.Name} Gained +15 Energy.");
         Fighter nextInLine = fighters[1];
         Console.WriteLine($"Next turn goes to {nextInLine.Name}!");
         Console.ReadLine();
+        Console.Clear();
     }
 
     public void ApplyBuffs(rewardSystem reward)
@@ -208,8 +210,8 @@ public class BattleSystem
     }
     public void DisplayFighters()
     {
-        List<Enemy> Enemies = fighters.OfType<Enemy>().Where(e => e.HP > 0).ToList();
-        List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.HP > 0).ToList();
+        List<Enemy> Enemies = fighters.OfType<Enemy>().Where(e => e.HP > 0).OrderBy(h => h.Name).ToList();
+        List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.HP > 0).OrderBy(h => h.Name).ToList();
         for (int i = 0; i < Enemies.Count; i++)
         {
             Console.Write($"{i+1}. {Enemies[i].Name}: {Enemies[i].HP}HP ");
