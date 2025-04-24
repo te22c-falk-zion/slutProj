@@ -3,12 +3,13 @@ public class Enemy : Fighter
     public float level;
     public override void Attack(Fighter target)
     {
-        target.HP -= ATK;
+        target.HP -= ATK * (Random.Shared.Next(100,150)/100);
     }
-    public void LevelUp(int level)
+    public void LevelUp(float stage)
     {
-        HP = HP*level;
-        ATK = ATK*level;
+        level += stage/2;
+        HP += HP*level;
+        ATK += ATK*level;
         SPD += level/10 * 6;
     }
 }

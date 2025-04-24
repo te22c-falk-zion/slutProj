@@ -69,7 +69,7 @@ public class BattleSystem
         while (!targetString.All(char.IsDigit) || targetInt <= 0 || targetInt >= aliveTargets.Count +1)
         {
             Console.Clear();
-            Console.WriteLine($"It is {hero.Name}'s turn!");
+            Console.WriteLine($"It is {hero.Name}'s turn!\n");
             DisplayFighters();
             Console.WriteLine($"Skill points:{skillPoints} || {hero.Name}'s Energy: {hero.ultEnergy}");
             Console.WriteLine("Pick who to attack. Type in the number corresponding to the enemy.");

@@ -55,8 +55,7 @@ public class rewardSystem
         {
             
             while (!choiceString.All(char.IsDigit) && choiceInt > buffs.Count || choiceInt <= 0)
-            {       
-                Console.WriteLine($"Total Buffs in buffs: {buffs.Count}");
+            {      
                 Console.WriteLine("You are being rewarded for your efforts.\nThree random items will be generated.\nYou will be able to pick one of these for yourself.");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\n TIP: You are able to select once to see what buffs they give and then back out if you dont wan't it.");
@@ -68,7 +67,6 @@ public class rewardSystem
                 {
                     Console.WriteLine($"{i+1}. {buffs[i].Name}");
                 }
-                Console.WriteLine($"Total Buffs in buffItems: {buffs.Count}");
                 choiceString = Console.ReadLine();
                 choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
                 Console.Clear();

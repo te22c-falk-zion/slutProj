@@ -4,16 +4,19 @@ using System.Runtime.CompilerServices;
 
 
 List<Enemy> enemies = new List<Enemy>(); 
-Hero player = new Hero { Name = "Seele", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 124, CR = 80, CD = 150, NorMult = 100, SkiMult = 200, UltMult = 400 };
-Hero player2 = new Hero { Name = "Yanqing", maxHP = 3000, HP = 3000, ATK = 2000, SPD = 95, CR = 20, CD = 300, NorMult = 100, SkiMult = 200, UltMult = 400 };
-
 List<Hero> heroes = new();
-heroes.Add(player);
-heroes.Add(player2);
+heroes.AddRange(new List<Hero> 
+{
+    new Hero { Name = "Seele", maxHP = 1800, HP = 1800, ATK = 2300, SPD = 124, CR = 80, CD = 160, NorMult = 100, SkiMult = 300, UltMult = 300 },
+    new Hero { Name = "Yanqing", maxHP = 2000, HP = 2000, ATK = 1000, SPD = 134, CR = 20, CD = 300, NorMult = 120, SkiMult = 200, UltMult = 400 },
+    new Hero { Name = "Blade", maxHP = 5000, HP = 5000, ATK = 1000, SPD = 95, CR = 50, CD = 180, NorMult = 100, SkiMult = 300, UltMult = 300 },
+    new Hero { Name = "Kafka", maxHP = 2400, HP = 2400, ATK = 1800, SPD = 134, CR = 60, CD = 150, NorMult = 120, SkiMult = 200, UltMult = 400 }
+});
+
 rewardSystem reward = new rewardSystem(heroes, enemies);
 OccuranceSystem occurance = new OccuranceSystem(heroes, reward);
 
-int stage = 1;
+float stage = 1;
 bool gameLoop = true;
 Tutorial(1);
 
@@ -44,8 +47,10 @@ while (gameLoop == true)
             occurance.OccuranceStart();
             enemies.AddRange(new List<Enemy>
             {
-                new Enemy { Name = "Goblin", HP = 25000, ATK = 100, SPD = 90},
-                new Enemy { Name = "Goblin2", HP = 25000, ATK = 100, SPD = 90}
+                new Enemy { Name = "Goboblin", HP = 25000, ATK = 100, SPD = 90},
+                new Enemy { Name = "Goblito", HP = 25000, ATK = 100, SPD = 90},
+                new Enemy { Name = "Gobleta", HP = 25000, ATK = 100, SPD = 90},
+                new Enemy { Name = "Jonathan", HP = 25000, ATK = 100, SPD = 90}
             });
             enemies.ForEach(e => e.LevelUp(stage));
             BattleSystem combat = new BattleSystem(heroes, enemies);
