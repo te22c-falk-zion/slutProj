@@ -1,15 +1,39 @@
+using System.Runtime.CompilerServices;
+
 public class Inventory
 {
-    public List<Buff> buffs = [];
+    public List<Item> items = [];
+    public int maxItems;
 
     public void Display()
     {
-        for (int i = 0; i < buffs.Count; i++)
+        maxItems = items.Count;
+        Console.WriteLine("\nDisplaying Buffs:");
+        for (int i = 0; i < items.Count; i++)
         {
-            Console.WriteLine($"{i+1} {buffs[i].Name}");
+            Console.WriteLine($"{i+1}. {items[i].Name}");
         }
         Console.ReadLine();
     }
+    public void UseDisplay()
+    {
+        int inspectInt = 20;
+        string inspectString = "a";
+        
+        while(!inspectString.All(char.IsDigit) || inspectInt > maxItems || inspectInt <= 0)
+        {
+            Display();
+            Console.WriteLine($"Select what to inspect");
+            inspectString = Console.ReadLine();
+            inspectInt = int.TryParse(inspectString, out inspectInt) ? inspectInt : 0;
+            Console.Clear();
+        }
+        items[inspectInt-1].Use();
+    }
     
+    public Inventory()
+    {
+        maxItems = items.Count;
+    }
 
 }

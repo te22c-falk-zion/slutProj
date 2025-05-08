@@ -178,14 +178,20 @@ public class BattleSystem
 
         for (int i = 0; i < bufftargets.Count; i++)
         {
-            for (int y = 0; y < reward.BuffList.buffs.Count; y++)
+            for (int y = 0; y < reward.BuffList.items.Count; y++)
             {
-                bufftargets[i].SPD += reward.BuffList.buffs[y].SPDbuff;
-                bufftargets[i].CR += reward.BuffList.buffs[y].CRbuff;
-                bufftargets[i].CD += reward.BuffList.buffs[y].CDbuff;
-                bufftargets[i].ATK += reward.BuffList.buffs[y].ATKbuff/100 * bufftargets[i].ATK;
-                bufftargets[i].HP += reward.BuffList.buffs[y].HPbuff/100 * bufftargets[i].HP;
-                bufftargets[i].maxHP += reward.BuffList.buffs[y].HPbuff/100 * bufftargets[i].maxHP;
+                Buff currentBuff = reward.BuffList.items[y] as Buff;
+                if (currentBuff != null)
+                {
+                    
+                 
+                bufftargets[i].SPD += currentBuff.SPDbuff;
+                bufftargets[i].CR += currentBuff.CRbuff;
+                bufftargets[i].CD += currentBuff.CDbuff;
+                bufftargets[i].ATK += currentBuff.ATKbuff/100 * bufftargets[i].ATK;
+                bufftargets[i].HP += currentBuff.HPbuff/100 * bufftargets[i].HP;
+                bufftargets[i].maxHP += currentBuff.HPbuff/100 * bufftargets[i].maxHP;
+                }
             }
         }
 
@@ -196,14 +202,20 @@ public class BattleSystem
 
         for (int i = 0; i < bufftargets.Count; i++)
         {
-            for (int y = 0; y < reward.BuffList.buffs.Count; y++)
+            for (int y = 0; y < reward.BuffList.items.Count; y++)
             {
-                bufftargets[i].SPD -= reward.BuffList.buffs[y].SPDbuff;
-                bufftargets[i].CR -= reward.BuffList.buffs[y].CRbuff;
-                bufftargets[i].CD -= reward.BuffList.buffs[y].CDbuff;
-                bufftargets[i].ATK = bufftargets[i].ATK/((reward.BuffList.buffs[y].ATKbuff/100)+1);
-                bufftargets[i].HP = bufftargets[i].HP/((reward.BuffList.buffs[y].HPbuff/100)+1);
-                bufftargets[i].maxHP = bufftargets[i].maxHP/((reward.BuffList.buffs[y].HPbuff/100)+1);
+            Buff currentBuff = reward.BuffList.items[y] as Buff;
+            if (currentBuff != null)
+            {
+                
+              
+                bufftargets[i].SPD -= currentBuff.SPDbuff;
+                bufftargets[i].CR -= currentBuff.CRbuff;
+                bufftargets[i].CD -= currentBuff.CDbuff;
+                bufftargets[i].ATK = bufftargets[i].ATK/((currentBuff.ATKbuff/100)+1);
+                bufftargets[i].HP = bufftargets[i].HP/((currentBuff.HPbuff/100)+1);
+                bufftargets[i].maxHP = bufftargets[i].maxHP/((currentBuff.HPbuff/100)+1);
+            }
             }
         }
 

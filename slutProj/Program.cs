@@ -27,6 +27,7 @@ while (gameLoop == true)
     int choiceInt = 10;
     string tutorialString = "a";
     int TutorialInt = 10;
+    
 
     while (!choiceString.All(char.IsDigit) && choiceInt >= 5 || choiceInt <= 0)
     {   
@@ -44,6 +45,7 @@ while (gameLoop == true)
     switch (choiceInt)
     {
         case 1:
+            
             occurance.OccuranceStart();
             enemies.AddRange(new List<Enemy>
             {
@@ -55,26 +57,26 @@ while (gameLoop == true)
             enemies.ForEach(e => e.LevelUp(stage));
             BattleSystem combat = new BattleSystem(heroes, enemies);
             combat.InBattle(reward);            
-            reward.RewardBuff();
+            reward.RewardBuff(1);
             stage++;
             occurance.OccuranceStart();
         break;
         case 2:
-            reward.BuffList.Display();
+            reward.BuffList.UseDisplay();
         break;
         case 3:
-            while(!tutorialString.All(char.IsDigit) && TutorialInt >= 6 || choiceInt <= 0)
+            while(!tutorialString.All(char.IsDigit) && TutorialInt >= 6 || TutorialInt <= 0)
             {
-            Console.WriteLine("What do you need help with?");
-            Console.WriteLine("If you want to see the Entire Turorial again type 1.");
-            Console.WriteLine("If you want to see the Game Description again type 2.");
-            Console.WriteLine("If you want to see the Normal Attack again type 3.");
-            Console.WriteLine("If you want to see the Skill Attack again type 4.");
-            Console.WriteLine("If you want to see the Ultimate Attack again type 5.");
-            Console.WriteLine("If you want to see the Buff Tutorial again type 6.");
-            Console.WriteLine("If you want to see the Occurance Tutorial again type 7.");
-            tutorialString = Console.ReadLine();
-            TutorialInt = int.TryParse(tutorialString, out TutorialInt) ? TutorialInt : 0;
+                Console.WriteLine("What do you need help with?");
+                Console.WriteLine("If you want to see the Entire Turorial again type 1.");
+                Console.WriteLine("If you want to see the Game Description again type 2.");
+                Console.WriteLine("If you want to see the Normal Attack again type 3.");
+                Console.WriteLine("If you want to see the Skill Attack again type 4.");
+                Console.WriteLine("If you want to see the Ultimate Attack again type 5.");
+                Console.WriteLine("If you want to see the Buff Tutorial again type 6.");
+                Console.WriteLine("If you want to see the Occurance Tutorial again type 7.");
+                tutorialString = Console.ReadLine();
+                TutorialInt = int.TryParse(tutorialString, out TutorialInt) ? TutorialInt : 0;
             }
             Tutorial(TutorialInt);
         break;

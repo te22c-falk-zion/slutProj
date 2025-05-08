@@ -19,6 +19,11 @@ public class Buff : Item
         CDbuff = cd;
         ATKbuff = atk;
         HPbuff = hp;
-
+    }
+    public override void Use()
+    {
+        Console.WriteLine($"{itemBio}");
+        Console.ReadLine();
     }
 }
+

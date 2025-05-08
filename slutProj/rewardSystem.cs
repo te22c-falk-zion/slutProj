@@ -43,16 +43,22 @@ public class rewardSystem
         random = new Random();
     }
 
-    public void RewardBuff()
-    {
+    public void RewardBuff(int amount)
+    {   
+        for (int y = 0; y < amount; y++)
+        {
+            Console.WriteLine($"You have {amount-y}/{amount} Buffs to claim.");
         string choiceString = "a";
         int choiceInt = 0;
         string answer = "no";
         bool loop = true;
         List<Buff> buffs = GenerateBuffs();
 
+
+            
         while (loop == true)
         {
+                
             
             while (!choiceString.All(char.IsDigit) && choiceInt > buffs.Count || choiceInt <= 0)
             {      
@@ -84,17 +90,24 @@ public class rewardSystem
             }
             else if(answer.Equals("yes"))
             {
-                
                 loop = false;
             }
+            else if(!answer.Equals("yes") || !answer.Equals("yes"))
+            {
+                
+                Console.WriteLine("Please write something.");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
+        
         Console.WriteLine("Adding to inventory...");
-        BuffList.buffs.Add(buffs[choiceInt-1]);
+        BuffList.items.Add(buffs[choiceInt-1]);
         Console.WriteLine($"{buffs[choiceInt-1].Name} Added!");
         BuffList.Display();
-
-
-
+        choiceString = "a";
+        choiceInt = 0;
+        }
     }
 
     //Skapar en ny lista med en method så vi kan använda den i RewardBuff()

@@ -36,7 +36,7 @@ public class OccuranceSystem {
                 break;
                 case 2:
                 Console.WriteLine("Buff Occurance generated");
-                rewardSystem.RewardBuff();
+                rewardSystem.RewardBuff(1);
                 Console.ReadLine();
                 Console.Clear();
                 break;

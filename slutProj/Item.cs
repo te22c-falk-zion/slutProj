@@ -12,5 +12,6 @@ public class Item
     public virtual void Use()
     {
         Console.WriteLine($"This does not have a use.");
+        Console.ReadLine();
     }
 }
