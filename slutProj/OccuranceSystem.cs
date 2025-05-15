@@ -25,12 +25,10 @@ public class OccuranceSystem {
                 List<Hero> healTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
                 for (int i = 0; i < healTargets.Count; i++)
                 {
-                    Console.Write($"{healTargets[i].Name}: {healTargets[i].HP} -->");
-                    healTargets[i].HP = healTargets[i].maxHP;
-                    Console.WriteLine($"{healTargets[i].maxHP}");
-                    Console.ReadLine();
-                    Console.Clear();
+                    ChangeHp(healTargets[i], 50);
+                    Console.ReadLine();   
                 }
+                Console.Clear();
                 Console.WriteLine("All heroes have been healed!");
                 Console.ReadLine();
                 break;
@@ -42,6 +40,18 @@ public class OccuranceSystem {
                 break;
                 case 3:
                 Console.WriteLine("Nerf Occurance generated (not finished)");
+                int randomNerf = Random.Shared.Next(0,2);
+                if (randomNerf == 1)
+                {
+                    Random rnd = new Random();
+                    List<Hero> randomTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
+                    Hero randomTarget = randomTargets[rnd.Next(randomTargets.Count)];
+                    ChangeHp(randomTarget, -20);
+                }
+                if (randomNerf == 2)
+                {
+                    Console.WriteLine("You're lucky this nerf isn't implemented yet...");
+                }
                 Console.ReadLine();
                 break;
             }
@@ -50,6 +60,25 @@ public class OccuranceSystem {
         {
             Console.WriteLine("No occurance was generated...");
             Console.ReadLine();
+        }
+    }
+
+    public void ChangeHp(Fighter target, float percent)
+    {
+        float saveHP = target.HP;
+        float HPChange = (target.maxHP/100) * percent;
+        target.HP += HPChange;
+        if (target.HP > target.maxHP) target.HP = target.maxHP;
+        if (target.HP == 0) target.HP = 1;
+        if(target.HP > saveHP)
+        {
+        Console.WriteLine($"{target.Name} healed by {HPChange}.");
+        Console.WriteLine($"{saveHP} --> {target.HP}");
+        }
+        if (target.HP < saveHP)
+        {
+            Console.WriteLine($"{target.Name} lost {HPChange} health.");
+            Console.WriteLine($"{saveHP} --> {target.HP}");
         }
     }
 }
