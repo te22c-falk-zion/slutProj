@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 public class Inventory
 {
     public List<Item> items = [];
-    public int maxItems;
+    private int maxItems;
 
     public void Display()
     {

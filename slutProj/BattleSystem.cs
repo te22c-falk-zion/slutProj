@@ -47,7 +47,7 @@ public class BattleSystem
 
 
 
-    public void HeroTurn(Hero hero)
+    private void HeroTurn(Hero hero)
     {
         Console.Clear();
         if (skillPoints > 5) skillPoints = 5;
@@ -144,7 +144,7 @@ public class BattleSystem
         Console.Clear();
         }
     }
-    public void EnemyTurn(Enemy enemy)
+    private void EnemyTurn(Enemy enemy)
     {
         Console.Clear();
         
@@ -172,7 +172,7 @@ public class BattleSystem
         Console.Clear();
     }
 
-    public void ApplyBuffs(rewardSystem reward)
+    private void ApplyBuffs(rewardSystem reward)
     {
         List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
 
@@ -196,7 +196,7 @@ public class BattleSystem
         }
 
     }
-    public void RemoveBuffs(rewardSystem reward)
+    private void RemoveBuffs(rewardSystem reward)
     {
         List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
 
@@ -220,7 +220,7 @@ public class BattleSystem
         }
 
     }
-    public void DisplayFighters()
+    private void DisplayFighters()
     {
         List<Enemy> Enemies = fighters.OfType<Enemy>().Where(e => e.HP > 0).OrderBy(h => h.Name).ToList();
         List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.HP > 0).OrderBy(h => h.Name).ToList();

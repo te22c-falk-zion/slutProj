@@ -16,10 +16,10 @@ heroes.AddRange(new List<Hero>
 rewardSystem reward = new rewardSystem(heroes, enemies);
 OccuranceSystem occurance = new OccuranceSystem(heroes, reward);
 Tutorial tutorial = new Tutorial();
-
 float stage = 1;
 bool gameLoop = true;
 tutorial.Intro(1);
+
 
 while (gameLoop == true)
 {

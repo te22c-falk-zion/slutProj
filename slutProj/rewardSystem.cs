@@ -111,7 +111,7 @@ public class rewardSystem
     }
 
     //Skapar en ny lista med en method så vi kan använda den i RewardBuff()
-    public List<Buff> GenerateBuffs()
+    private List<Buff> GenerateBuffs()
     {
         //skapar en ny lista för att sätta våra buffs
         //Skapar en HashSet eftersom den kan inte ha fler av en interger så vi får olika buffs från listan.

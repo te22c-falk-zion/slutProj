@@ -63,7 +63,7 @@ public class OccuranceSystem {
         }
     }
 
-    public void ChangeHp(Fighter target, float percent)
+    private void ChangeHp(Fighter target, float percent)
     {
         float saveHP = target.HP;
         float HPChange = (target.maxHP/100) * percent;

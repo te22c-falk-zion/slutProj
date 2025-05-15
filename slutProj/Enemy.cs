@@ -1,6 +1,6 @@
 public class Enemy : Fighter
 {
-    public float level;
+    private float level;
     public override void Attack(Fighter target)
     {
         target.HP -= ATK * (Random.Shared.Next(100,150)/100);
