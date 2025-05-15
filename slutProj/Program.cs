@@ -31,7 +31,8 @@ while (gameLoop == true)
             occurance.OccuranceStart();
             enemies = EnemySpawner.CreateEnemies(stage);
             BattleSystem combat = new BattleSystem(heroes, enemies);
-            combat.InBattle(reward);            
+            combat.InBattle(reward);
+            enemies.Clear();            
             reward.RewardBuff(1);
             stage++;
             occurance.OccuranceStart();
