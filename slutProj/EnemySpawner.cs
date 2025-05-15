@@ -3,13 +3,11 @@ public class EnemySpawner
 
     private static readonly List<Enemy> SpawnableEnemies = new()
     {
-        new Enemy { Name = "Goboblin", HP = 25000, ATK = 95, SPD = 90 },
-        new Enemy { Name = "Goblito", HP = 25000, ATK = 95, SPD = 90 },
-        new Enemy { Name = "Gobleta", HP = 25500, ATK = 90, SPD = 90 },
-        new Enemy { Name = "Jonathan", HP = 24500, ATK = 105, SPD = 90 },
-        new Enemy { Name = "ArmorMan", HP = 28000, ATK = 150, SPD = 85 },
-        new Enemy { Name = "WolfDude", HP = 24000, ATK = 130, SPD = 110 },
-        new Enemy { Name = "Eonz", HP = 30000, ATK = 200, SPD = 60 }
+        new Enemy("Goboblin",25000,25000,95,90,0,0),
+        new Enemy("Goblito",25000,25000,95,90,0,0),
+        new Enemy("ArmorMan",28000,28000,150,85,0,0),
+        new Enemy("WolfDude",24000,24000,130,110,0,0),
+        new Enemy("Eonz",30000,30000,200,60,0,0)
     };
     public static List<Enemy> CreateEnemies(float stage, int enemyAmount = 4)
     {
@@ -23,12 +21,15 @@ public class EnemySpawner
              if (selectedEnemies.Add(selectEnemy))
              {
                 Enemy enemy = new Enemy
-                {
-                    Name = SpawnableEnemies[selectEnemy].Name,
-                    HP = SpawnableEnemies[selectEnemy].HP,
-                    ATK = SpawnableEnemies[selectEnemy].ATK,
-                    SPD = SpawnableEnemies[selectEnemy].SPD
-                };
+                (
+                    SpawnableEnemies[selectEnemy].GetFighterName(),
+                    SpawnableEnemies[selectEnemy].GetFighterFloat("MaxHealth"),
+                    SpawnableEnemies[selectEnemy].GetFighterFloat("Health"),
+                    SpawnableEnemies[selectEnemy].GetFighterFloat("Attack"),
+                    SpawnableEnemies[selectEnemy].GetFighterFloat("Speed"),
+                    0,
+                    0
+                );
                 enemy.LevelUp(stage);
                 enemies.Add(enemy);
              }

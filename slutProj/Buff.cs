@@ -6,11 +6,11 @@ using System.Security.Cryptography.X509Certificates;
 
 public class Buff : Item
 {
-    public float SPDbuff { get; set; }
-    public float CRbuff { get; set; }
-    public float CDbuff { get; set; }
-    public float ATKbuff { get; set; }
-    public float HPbuff { get; set; }
+    private float SPDbuff { get; set; }
+    private float CRbuff { get; set; }
+    private float CDbuff { get; set; }
+    private float ATKbuff { get; set; }
+    private float HPbuff { get; set; }
 
     public Buff(string Name, float spd, float cr, float cd, float atk, float hp, string bio) : base(Name, bio)
     {
@@ -24,6 +24,31 @@ public class Buff : Item
     {
         Console.WriteLine($"{itemBio}");
         Console.ReadLine();
+    }
+
+    public float GetBuff(string buffname)
+    {
+        if(buffname == "Speed")
+        {
+            return SPDbuff;
+        }
+        if(buffname == "CritRate")
+        {
+            return CRbuff;
+        }        
+        if(buffname == "CritDamage")
+        {
+            return CDbuff;
+        }        
+        if(buffname == "Attack")
+        {
+            return ATKbuff;
+        }
+        if(buffname == "health")
+        {
+            return HPbuff;
+        }
+        else return 0;
     }
 }
 

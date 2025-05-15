@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 
 List<Hero> heroes = new()
 {
-    new Hero { Name = "Seele", maxHP = 1800, HP = 1800, ATK = 2300, SPD = 124, CR = 80, CD = 160, NorMult = 100, SkiMult = 300, UltMult = 300 },
-    new Hero { Name = "Yanqing", maxHP = 2000, HP = 2000, ATK = 1000, SPD = 134, CR = 20, CD = 300, NorMult = 120, SkiMult = 200, UltMult = 400 },
-    new Hero { Name = "Blade", maxHP = 5000, HP = 5000, ATK = 1000, SPD = 95, CR = 50, CD = 180, NorMult = 100, SkiMult = 300, UltMult = 300 },
-    new Hero { Name = "Kafka", maxHP = 2400, HP = 2400, ATK = 1800, SPD = 134, CR = 60, CD = 150, NorMult = 120, SkiMult = 200, UltMult = 400 }
+    new Hero("Seele",1800,1800,2300,124,0,80,160,100,300,300,0),
+    new Hero("Yanqing",2000,2000,1400,134,0,20,300,120,200,400,0),
+    new Hero("Blade",5000,5000,1500,95,0,50,180,100,300,300,0),
+    new Hero("Kafka",2400,2400,1800,134,0,60,150,120,200,400,0)
 };
 
 
@@ -24,10 +25,11 @@ while (gameLoop == true)
     
     int choiceInt = menu.MainMenuChoose(stage);
 
+
     switch (choiceInt)
     {
         case 1:
-            
+            reward.RewardBuff(1);
             occurance.OccuranceStart();
             enemies = EnemySpawner.CreateEnemies(stage);
             BattleSystem combat = new BattleSystem(heroes, enemies);

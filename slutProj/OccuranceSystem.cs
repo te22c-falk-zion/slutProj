@@ -22,7 +22,7 @@ public class OccuranceSystem {
             {
                 case 1:
                 Console.WriteLine("Heal Occurance generated");
-                List<Hero> healTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
+                List<Hero> healTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.GetFighterFloat("Health") > 0).ToList();
                 for (int i = 0; i < healTargets.Count; i++)
                 {
                     ChangeHp(healTargets[i], 50);
@@ -44,7 +44,7 @@ public class OccuranceSystem {
                 if (randomNerf == 1)
                 {
                     Random rnd = new Random();
-                    List<Hero> randomTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.HP > 0).ToList();
+                    List<Hero> randomTargets = fighters.OfType<Hero>().Where(h => h is Hero && h.GetFighterFloat("Health") > 0).ToList();
                     Hero randomTarget = randomTargets[rnd.Next(randomTargets.Count)];
                     ChangeHp(randomTarget, -20);
                 }
@@ -65,20 +65,29 @@ public class OccuranceSystem {
 
     private void ChangeHp(Fighter target, float percent)
     {
-        float saveHP = target.HP;
-        float HPChange = (target.maxHP/100) * percent;
-        target.HP += HPChange;
-        if (target.HP > target.maxHP) target.HP = target.maxHP;
-        if (target.HP == 0) target.HP = 1;
-        if(target.HP > saveHP)
+        float saveHP = target.GetFighterFloat("Health");
+        float HPChange = target.GetFighterFloat("Health")/100 * percent;
+        float healHealth = target.GetFighterFloat("Health");
+        target.SetFighterFloat("Health", saveHP + HPChange);
+
+        if (target.GetFighterFloat("Health") > target.GetFighterFloat("MaxHealth"))
         {
-        Console.WriteLine($"{target.Name} healed by {HPChange}.");
-        Console.WriteLine($"{saveHP} --> {target.HP}");
+            target.SetFighterFloat("Health", target.GetFighterFloat("MaxHealth"));
         }
-        if (target.HP < saveHP)
+        if (target.GetFighterFloat("Health") == 0)
         {
-            Console.WriteLine($"{target.Name} lost {HPChange} health.");
-            Console.WriteLine($"{saveHP} --> {target.HP}");
+            target.SetFighterFloat("Health",1);
+        }
+
+        if(target.GetFighterFloat("Health") > saveHP)
+        {
+        Console.WriteLine($"{target.GetFighterName()} healed by {HPChange}.");
+        Console.WriteLine($"{saveHP} --> {target.GetFighterFloat("Health")}");
+        }
+        if (target.GetFighterFloat("Health") < saveHP)
+        {
+            Console.WriteLine($"{target.GetFighterName()} lost {HPChange} health.");
+            Console.WriteLine($"{saveHP} --> {target.GetFighterFloat("Health")}");
         }
     }
 }
