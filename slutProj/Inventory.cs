@@ -24,11 +24,20 @@ public class Inventory
         {
             Display();
             Console.WriteLine($"Select what to inspect");
+            Console.WriteLine($"Type 0 to quit.");
             inspectString = Console.ReadLine();
             inspectInt = int.TryParse(inspectString, out inspectInt) ? inspectInt : 0;
+            if (inspectInt == 0)
+            {
+                break;
+            }
             Console.Clear();
         }
+        if (inspectInt != 0)
+        {
         items[inspectInt-1].Use();
+        }
+        
     }
     
     public Inventory()

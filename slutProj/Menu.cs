@@ -1,4 +1,52 @@
-public class Tutorial {
+public class Menu {
+
+public int MainMenuChoose(float stage)
+{
+    string choiceString = "a";
+    int choiceInt = 10;
+    while (!choiceString.All(char.IsDigit) && choiceInt >= 5 || choiceInt <= 0)
+    {   
+        Console.Clear();
+        Console.WriteLine($"Stage: {stage}");
+        Console.WriteLine("What would you like to do?");
+        Console.WriteLine("Type the number corresponding to your choice.");
+        Console.WriteLine("1. Fight");
+        Console.WriteLine("2. Check Bag");
+        Console.WriteLine("3. Help");
+        Console.WriteLine("4. Quit");
+        choiceString = Console.ReadLine();
+        choiceInt = int.TryParse(choiceString, out choiceInt) ? choiceInt : 0;
+        
+    }
+    return choiceInt;
+}
+
+
+public void Help()
+{
+    string tutorialString = "a";
+    int TutorialInt = 10;
+    while(!tutorialString.All(char.IsDigit) && TutorialInt >= 6 || TutorialInt < 0)
+            {
+                Console.WriteLine("What do you need help with?");
+                Console.WriteLine("0. Back To Menu");
+                Console.WriteLine("1. Entire Tutorial");
+                Console.WriteLine("2. Game Description");
+                Console.WriteLine("3. Attack Tutorial");
+                Console.WriteLine("4. Skill Tutorial");
+                Console.WriteLine("5. Ultimate Tutorial");
+                Console.WriteLine("6. Buff Tutorial");
+                Console.WriteLine("7. Occurance Tutorial");
+
+                tutorialString = Console.ReadLine();
+                TutorialInt = int.TryParse(tutorialString, out TutorialInt) ? TutorialInt : 0;
+                if (TutorialInt == 0)
+                {
+                    break;
+                }
+            }
+            Intro(TutorialInt);
+}
 
 
 public void Intro(int var)
