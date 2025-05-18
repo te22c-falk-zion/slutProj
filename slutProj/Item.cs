@@ -1,5 +1,6 @@
 public class Item
 {
+    //Initialisering.
     public string Name { get ; set; }
     public string itemBio { get; set; }
 
@@ -9,6 +10,7 @@ public class Item
         itemBio = bio;
     }
 
+    //Virtual void för om man använder ett item inom UseDisplay.
     public virtual void Use()
     {
         Console.WriteLine($"This does not have a use.");

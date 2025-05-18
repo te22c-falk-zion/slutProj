@@ -6,14 +6,15 @@ using System.Collections.Generic;
 
 public class rewardSystem 
 {
+
+    //Initialisering.
    private List<Fighter> fighters;
    private Random random;
    public Inventory BuffList;
+
+   //Skapar en lista med alla buffs tillgängliga till playern.
    private List<Buff> buffItems = new List<Buff>
    {
-    //Notes for future me!
-    //Speed is additive, CR is additive, CD is additive,
-    //ATK is multiplicitive, HP is multiplicitave.
     new Buff("Air Jordans",15,0,0,5,5,
     $"These boots gives your team +15 SPD as well as +5% HP & ATK."),
     new Buff("Lens-Maker's Glasses",0,7,10,0,0,
@@ -29,7 +30,10 @@ public class rewardSystem
     new Buff("Filler",0,5,10,2,2,
     "It's just here.. I guess?\n Increases CR by 5%, CD by 10%, ATK by 2% and HP by 2%."),
     new Buff("Dev Spec",100,50,300,200,0,
-    "You aren't supposed to have this...\n +100 SPD, +50 CR, +300 CD, +200% ATK")
+    "You aren't supposed to have this...\n +100 SPD, +50 CR, +300 CD, +200% ATK")    
+    //Notes for future me!
+    //Speed is additive, CR is additive, CD is additive,
+    //ATK is multiplicitive, HP is multiplicitave.
    };
 
    
@@ -43,8 +47,11 @@ public class rewardSystem
         random = new Random();
     }
 
+
+    
     public void RewardBuff(int amount)
     {   
+        //ger playern buffs beroende på hur mycket som står på "amount".
         for (int y = 0; y < amount; y++)
         {
             Console.WriteLine($"You have {amount-y}/{amount} Buffs to claim.");
@@ -52,6 +59,8 @@ public class rewardSystem
         int choiceInt = 0;
         string answer = "no";
         bool loop = true;
+
+        //generarar alla buffs inom en annan metod
         List<Buff> buffs = GenerateBuffs();
 
 
@@ -68,7 +77,7 @@ public class rewardSystem
                 Console.ResetColor();
                 Console.ReadLine();
                 
-            
+                //Skriver ner alla buffs som är utvalda.
                 for (int i = 0; i < buffs.Count; i++)
                 {
                     Console.WriteLine($"{i+1}. {buffs[i].Name}");
@@ -80,6 +89,8 @@ public class rewardSystem
 
             Console.WriteLine($"{buffs[choiceInt-1].Name}\n\n{buffs[choiceInt-1].itemBio}");
             Console.WriteLine($"Do you want to pick up this item? Yes/No");
+
+            //Ser till att playern skriver in ja eller nej.
             answer = Console.ReadLine().Trim().ToLower();
             if (answer.Equals("no"))
             {
@@ -101,6 +112,7 @@ public class rewardSystem
             }
         }
         
+        //Sätter in allt i inventory och startar om allt för att bli använt igen.
         Console.WriteLine("Adding to inventory...");
         BuffList.items.Add(buffs[choiceInt-1]);
         Console.WriteLine($"{buffs[choiceInt-1].Name} Added!");

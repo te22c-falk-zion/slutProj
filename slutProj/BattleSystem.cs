@@ -6,8 +6,11 @@ using System.Runtime.CompilerServices;
 
 public class BattleSystem 
 {
+
+    //Initialisering.
     private List<Fighter> fighters;
     private int skillPoints = 3;
+
     public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
     {
         fighters = new List<Fighter>();
@@ -23,42 +26,47 @@ public class BattleSystem
         }
     }
 
-        public void InBattle(rewardSystem reward)
-        {   
-            skillPoints = 3;
-            ApplyBuffs(reward);
-            Console.ReadLine();
-            //Skapar en while loop för när någon i bege listorna är levande
-            while(fighters.Any(h => h is Hero && h.GetFighterFloat("Health") > 0) && fighters.Any(e => e is Enemy && e.GetFighterFloat("Health") > 0))
+
+    //Startar fighten
+    public void InBattle(rewardSystem reward)
+    {   
+        skillPoints = 3;
+        ApplyBuffs(reward);
+        Console.ReadLine();
+        //Skapar en while loop för när någon i bege listorna är levande
+        while(fighters.Any(h => h is Hero && h.GetFighterFloat("Health") > 0) && fighters.Any(e => e is Enemy && e.GetFighterFloat("Health") > 0))
+        {
+            //Anordnar fighters listan från lägst AV value och sen gör det till listan.
+            // Den figther som har lägst AV kommer att bli nämnd till currentFigther
+            fighters = fighters.Where(f => f.GetFighterFloat("Health") > 0).OrderBy(f => f.GetFighterFloat("ActionValue")).ToList();
+            Fighter currentFighter = fighters.First();
+
+            
+            // letar inom fighters listan för där f inte är currentfighter och exluderar det från listan. sedan återskapar listan
+            // och för allt inom listan (nu finns inte currentfighter) så gör den minus currentFighter.AV på allt.
+            foreach (Fighter f in fighters.Where(f => f != currentFighter))
             {
-                //Anordnar fighters listan från lägst AV value och sen gör det till listan.
-                // Den figther som har lägst AV kommer att bli nämnd till currentFigther
-                fighters = fighters.Where(f => f.GetFighterFloat("Health") > 0).OrderBy(f => f.GetFighterFloat("ActionValue")).ToList();
-                Fighter currentFighter = fighters.First();
-
-                
-                // letar inom fighters listan för där f inte är currentfighter och exluderar det från listan. sedan återskapar listan
-                // och för allt inom listan (nu finns inte currentfighter) så gör den minus currentFighter.AV på allt.
-                foreach (Fighter f in fighters.Where(f => f != currentFighter))
-                {
-                    float fAV = f.GetFighterFloat("ActionValue");
-                    float currentAV = currentFighter.GetFighterFloat("ActionValue");
-                    f.SetFighterFloat("ActionValue", fAV - currentAV);
-                }
-                currentFighter.SetFighterFloat("ActionValue", 0);
-
-                if (currentFighter is Hero hero)
-                    HeroTurn(hero);
-                else if (currentFighter is Enemy enemy)
-                    EnemyTurn(enemy);
+                float fAV = f.GetFighterFloat("ActionValue");
+                float currentAV = currentFighter.GetFighterFloat("ActionValue");
+                f.SetFighterFloat("ActionValue", fAV - currentAV);
             }
-            RemoveBuffs(reward);
+            currentFighter.SetFighterFloat("ActionValue", 0);
+
+            //Om det är herons tur gör starta HeroTurn() metoden.
+            if (currentFighter is Hero hero)
+                HeroTurn(hero);
+            //Annars startsa EnemyTurn() Metoden.
+            else if (currentFighter is Enemy enemy)
+                EnemyTurn(enemy);
         }
+        RemoveBuffs(reward);
+    }
 
 
 
     private void HeroTurn(Hero hero)
     {
+        // Initialisering av floats och strings.
         Console.Clear();
         if (skillPoints > 5) skillPoints = 5;
         float beforeHP;
@@ -117,6 +125,8 @@ public class BattleSystem
 
                     break;
                 case 2:
+                    //Checkar om playern har någ med skill pointsör att göra sin skill
+                    // Om den har den så gör den sin skill och gör attacklanded true 
                     if (skillPoints <= 0) 
                     {
                         choiceInt = 10; 
@@ -138,7 +148,9 @@ public class BattleSystem
                         attacklanded = true;
                     }
                     break;
-                case 3:          
+                case 3:         
+                    //Checkar om playern har någ men ultenergy för att göra sin ult
+                    // Om den har den så gör den sin ult och gör attacklanded true 
                     if (hero.GetHeroStats("UltEnergy") <= 100)
                     {
                         choiceInt = 10;
@@ -163,7 +175,7 @@ public class BattleSystem
         }
 
 
-        
+        // Skriver text 
         if (attacklanded == true)
         {
         Console.WriteLine($"{target.GetFighterName()}'s HP: {beforeHP} --> {target.GetFighterFloat("Health")}");
@@ -207,10 +219,14 @@ public class BattleSystem
         Console.Clear();
     }
 
+
     private void ApplyBuffs(rewardSystem reward)
     {
+        //Skapar en list med alla heroes som kan bli buffad (hp > 0)
         List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.GetFighterFloat("Health") > 0).ToList();
 
+        //Gör en for loop för alla heroes i bufftargets och alla buffs inom bufflist
+        //Så att varje hero får varje buff.
         for (int i = 0; i < bufftargets.Count; i++)
         {
             for (int y = 0; y < reward.BuffList.items.Count; y++)
@@ -218,7 +234,9 @@ public class BattleSystem
                 Buff currentBuff = reward.BuffList.items[y] as Buff;
                 if (currentBuff != null)
                 {
+
                 
+                //Skapar en float mwd Get metoder.
                 float currentSPD = bufftargets[i].GetFighterFloat("Speed");
                 float currentCR = bufftargets[i].GetHeroStats("CritRate");
                 float currentCD = bufftargets[i].GetHeroStats("CritDamage");
@@ -226,6 +244,7 @@ public class BattleSystem
                 float currentHP = bufftargets[i].GetFighterFloat("Health");
                 float currentMaxHP = bufftargets[i].GetFighterFloat("MaxHealth");
 
+                //Lägger till buffs till den skapade floaten.
                 float buffSPD = currentSPD + currentBuff.GetBuff("Speed");
                 float buffCR = currentCR + currentBuff.GetBuff("CritRate");
                 float buffCD = currentCD + currentBuff.GetBuff("CritDamage");
@@ -233,11 +252,12 @@ public class BattleSystem
                 float buffHP = currentHP + currentBuff.GetBuff("Health")/100 * currentHP;
                 float buffMaxHP = currentMaxHP + currentBuff.GetBuff("Health")/100 * currentMaxHP;
 
+                //Applicerar dom genom en Set metod.
                 bufftargets[i].SetFighterFloat("Speed", buffSPD);
                 bufftargets[i].SetHeroStats("CritRate", buffCR);
                 bufftargets[i].SetHeroStats("CritDamage", buffCD);
                 bufftargets[i].SetFighterFloat("Attack", buffATK);
-                bufftargets[i].SetFighterFloat("Health", buffHP);
+                bufftargets[i].SetFighterFloat("Health", buffHP);   
                 bufftargets[i].SetFighterFloat("MaxHealth", buffMaxHP);
                 }
             }
@@ -246,6 +266,7 @@ public class BattleSystem
     }
     private void RemoveBuffs(rewardSystem reward)
     {
+        //Skapar en list med alla heroes som kan bli unbuffad (hp > 0)
         List<Hero> bufftargets = fighters.OfType<Hero>().Where(h => h is Hero && h.GetFighterFloat("Health") > 0).ToList();
 
         for (int i = 0; i < bufftargets.Count; i++)
@@ -256,6 +277,7 @@ public class BattleSystem
             if (currentBuff != null)
             {
                 
+                //Skapar en float mwd Get metoder.
                 float currentSPD = bufftargets[i].GetFighterFloat("Speed");
                 float currentCR = bufftargets[i].GetHeroStats("CritRate");
                 float currentCD = bufftargets[i].GetHeroStats("CritDamage");
@@ -263,6 +285,7 @@ public class BattleSystem
                 float currentHP = bufftargets[i].GetFighterFloat("Health");
                 float currentMaxHP = bufftargets[i].GetFighterFloat("MaxHealth");
 
+                //Tar bort buffs genom att göra motsattsen av apply buffs metoden.
                 float buffSPD = currentSPD - currentBuff.GetBuff("Speed");
                 float buffCR = currentCR - currentBuff.GetBuff("CritRate");
                 float buffCD = currentCD - currentBuff.GetBuff("CritDamage");
@@ -270,6 +293,7 @@ public class BattleSystem
                 float buffHP = currentHP/((currentBuff.GetBuff("Health")/100)+1);
                 float buffMaxHP = currentMaxHP/((currentBuff.GetBuff("Maxhealth")/100)+1);
 
+                //Applicerar dom genom en Set metod.
                 bufftargets[i].SetFighterFloat("Speed", buffSPD);
                 bufftargets[i].SetHeroStats("CritRate", buffCR);
                 bufftargets[i].SetHeroStats("CritDamage", buffCD);
@@ -283,8 +307,12 @@ public class BattleSystem
     }
     private void DisplayFighters()
     {
+        //Skappar en lista av heroes och enemies som är sorterad inom bokstavsordning.
         List<Enemy> Enemies = fighters.OfType<Enemy>().Where(e => e.GetFighterFloat("Health") > 0).OrderBy(h => h.GetFighterName()).ToList();
         List<Hero> Heroes = fighters.OfType<Hero>().Where(h => h.GetFighterFloat("Health") > 0).OrderBy(h => h.GetFighterName()).ToList();
+
+
+        //Skriver listorna
         for (int i = 0; i < Enemies.Count; i++)
         {
             Console.Write($"{i+1}. {Enemies[i].GetFighterName()}: {Enemies[i].GetFighterFloat("Health")}HP ");

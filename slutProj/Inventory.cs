@@ -2,9 +2,15 @@ using System.Runtime.CompilerServices;
 
 public class Inventory
 {
+
+    //Initialisering.
     public List<Item> items = [];
     private int maxItems;
 
+
+    //Metoder.
+
+    //Display metod som skriver ner allt inom din inventory.
     public void Display()
     {
         maxItems = items.Count;
@@ -15,6 +21,8 @@ public class Inventory
         }
         Console.ReadLine();
     }
+
+    //En version av display metoden men som tillåter spelaren att välja en av itemen och se vad den gör.
     public void UseDisplay()
     {
         int inspectInt = 20;

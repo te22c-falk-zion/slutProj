@@ -8,6 +8,7 @@ using System.Text;
 
 public class Hero : Fighter
 {
+    //Initialisering
     private float CR;
     private float CD;
     private float NorMult;
@@ -26,9 +27,12 @@ public class Hero : Fighter
         ultEnergy = _ultEnergy;
     }
 
+    //Metoder
+
+    //En annan get floats metod men för de specialla floats som bara heroes har.
     public float GetHeroStats(string heroStats)
     {
-        if (heroStats == "Critrate")
+        if (heroStats == "CritRate")
         {
             return CR;
         }
@@ -55,6 +59,7 @@ public class Hero : Fighter
         else return 0;
     }
 
+    //En annan set floats metod men för de specialla floats som bara heroes har.
     public void SetHeroStats(string thing, float value)
     {
         switch (thing)
@@ -81,11 +86,15 @@ public class Hero : Fighter
                 break;
         }
     }
+
+    //attack som kalkulerar hur mycket damage du ska göra mot motståndaren beroende på dina stats.
     public override void Attack(Fighter target)
     {
         
         float baseDamage = (NorMult/100)+1 * GetFighterFloat("Attack") + Random.Shared.Next(5000,10000);
         int roundedCR = (int)Math.Ceiling(CR);
+
+        //Om ditt attack landar ett crit så gör mer damage berodene på din crit damage.
         if (Random.Shared.Next(1,(100/roundedCR+1)) == 1)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -104,10 +113,14 @@ public class Hero : Fighter
         }
         
     }
+
+    //attack som kalkulerar hur mycket damage du ska göra mot motståndaren beroende på dina stats.
     public virtual void SkiAttack(Enemy target)
     {
         float baseDamage = (SkiMult/100)+1 * GetFighterFloat("Attack") + Random.Shared.Next(5000,10000);
         int roundedCR = (int)Math.Ceiling(CR);
+
+        //Om ditt attack landar ett crit så gör mer damage berodene på din crit damage.
         if (Random.Shared.Next(1,(100/roundedCR+1)) == 1)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -124,10 +137,14 @@ public class Hero : Fighter
             target.SetFighterFloat("Health", currentHealth - finalDamage);
         }
     }
+
+    //attack som kalkulerar hur mycket damage du ska göra mot motståndaren beroende på dina stats.
     public virtual void UltAttack(Enemy target)
     {
         float baseDamage = (UltMult/100)+1 * GetFighterFloat("Attack") + Random.Shared.Next(5000,10000);
         int roundedCR = (int)Math.Ceiling(CR);
+
+        //Om ditt attack landar ett crit så gör mer damage berodene på din crit damage.
         if (Random.Shared.Next(1,(100/roundedCR+1)) == 1)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;

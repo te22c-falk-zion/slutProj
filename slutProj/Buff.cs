@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 public class Buff : Item
 {
+    //Initialisering.
     private float SPDbuff { get; set; }
     private float CRbuff { get; set; }
     private float CDbuff { get; set; }
@@ -20,12 +21,17 @@ public class Buff : Item
         ATKbuff = atk;
         HPbuff = hp;
     }
+
+    //Metoder.
+
+    //Override för item Use metoden som visar sin bio.
     public override void Use()
     {
         Console.WriteLine($"{itemBio}");
         Console.ReadLine();
     }
 
+    //En getbuff metod som ger tillbaka sin buff's stats som används inom applybuffs meotden.
     public float GetBuff(string buffname)
     {
         if(buffname == "Speed")

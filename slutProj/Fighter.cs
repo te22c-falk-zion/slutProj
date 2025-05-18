@@ -1,5 +1,7 @@
 public class Fighter
 {
+
+    // Initialisering
     private string name;
     private float maxHP;
     private float HP;
@@ -16,6 +18,10 @@ public class Fighter
         SPD = _SPD;
         AV = _AV;
     }
+
+    //metoder
+
+    //Basic virtual atatck metod
     public virtual void Attack(Fighter target)
     {
         float finalDamage = GetFighterFloat("Attack");
@@ -23,6 +29,8 @@ public class Fighter
         target.SetFighterFloat("Health", currentHealth - finalDamage);
     }
 
+
+    // Get float metod
     public float GetFighterFloat(string thing)
     {
         if (thing == "Health")
@@ -48,6 +56,7 @@ public class Fighter
         else return 0;
     }
 
+    //Set float metod.
     public void SetFighterFloat(string thing, float value)
     {
         switch (thing)
@@ -72,7 +81,7 @@ public class Fighter
         }
     }
 
-
+    //Get name metod.
     public string GetFighterName()
     {
         return name;
