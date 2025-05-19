@@ -53,7 +53,7 @@ public class EnemySpawner
 
 
     //Creates enemies and then puts them into a queue that will be dequed whenever the active enemies are empty.
-    public static void CreateEnemyQueue(float stage, int amount)
+    private static void CreateEnemyQueue(float stage, int amount)
     {
         
         Random rnd = new Random();
@@ -83,7 +83,7 @@ public class EnemySpawner
     }
 
     //Like the one previously but this one just makes a singlurar boss.
-    public static void CreateBoss(float stage)
+    private static void CreateBoss(float stage)
     {
 
         Random rnd = new Random();

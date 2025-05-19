@@ -15,7 +15,7 @@ List<Enemy> enemies = new List<Enemy>();
 rewardSystem reward = new rewardSystem(heroes, enemies);
 OccuranceSystem occurance = new OccuranceSystem(heroes, reward);
 Menu menu = new Menu();
-float stage = 9;
+float stage = 1;
 bool gameLoop = true;
 
 
