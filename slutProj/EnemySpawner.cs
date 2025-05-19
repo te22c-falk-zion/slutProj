@@ -1,5 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
 
+
+// Denna kod kan vara förbättrad igenom att sätta kod inom CreateBoss() inom CreateEnemyQueue.
+// På de sättet blir det mindre metoder och en smidigare kod.
 public class EnemySpawner 
 {
 
@@ -50,6 +53,7 @@ public class EnemySpawner
 
         return spawnedEnemies;
     }
+
 
 
     //Creates enemies and then puts them into a queue that will be dequed whenever the active enemies are empty.
