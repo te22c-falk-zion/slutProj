@@ -8,7 +8,7 @@ public class Boss : Enemy
         this.level = level;
     }
 
-    public override void Attack(Fighter target)
+    public void BossAttack(Fighter target)
     {
         //En upgraderas atatck som bara bossen kan göra som också sänker ultimate energy.
         //Använder "is hero heroTarget" så att jag kan använda getherostats och setherostats.

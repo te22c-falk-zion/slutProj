@@ -202,8 +202,23 @@ public class BattleSystem
         DisplayFighters();
         Console.WriteLine($"{enemy.GetFighterName()} attacks {target.GetFighterName()}");
         Console.ReadLine();
+        if (enemy is Enemy enemyTurn)
+        {
+            enemyTurn.Attack(target);
+        }
+        else if (enemy is Boss bossTurn)
+        {
+            if (Random.Shared.Next(1,4) == 1)
+            {
+                bossTurn.BossAttack(target);
+            }
+            else
+            {
+                bossTurn.Attack(target);
+            }
 
-        enemy.Attack(target);
+        }   
+        
 
         float eSPD = enemy.GetFighterFloat("Speed");
         enemy.SetFighterFloat("ActionValue",10000/eSPD);
