@@ -192,10 +192,12 @@ public class BattleSystem
         {
             if (Random.Shared.Next(1,3) == 1)
             {
+                pet.SetPercent(-10);
                 pet.ChangeHp(target,pet.GetPercent());
             }
             else
             {
+                pet.SetPercent(10);
                 pet.ChangeHp(hero,pet.GetPercent());
             }
         }

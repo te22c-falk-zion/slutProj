@@ -11,7 +11,6 @@ public class Ica : Pet
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Follow Up!");
             Console.ResetColor();
-            SetPercent(10);
             base.ChangeHp(heroTarget, percent);
             Console.WriteLine($"{GetPetName()} healed {percent}% of {heroTarget.GetFighterName()}'s HP!");
             Console.ReadLine();
@@ -21,7 +20,6 @@ public class Ica : Pet
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Follow Up!");
             Console.ResetColor();
-            SetPercent(-10);
             base.ChangeHp(enemyTarget, percent);
             Console.WriteLine($"{GetPetName()} dealt {percent}% of {enemyTarget.GetFighterName()}'s HP!");
             Console.ReadLine();

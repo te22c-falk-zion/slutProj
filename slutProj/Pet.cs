@@ -29,16 +29,21 @@ public class Pet
         }
 
         //Skriver annorlunda text beroende på om ditt är under eller över det sparade saveHP tidigare i metoden.
-        if(target.GetFighterFloat("Health") > saveHP)
+        if(target.GetFighterFloat("Health") > saveHP && target is Hero)
         {
-        Console.WriteLine($"{target.GetFighterName()} healed by {HPChange}.");
-        Console.WriteLine($"{saveHP} --> {target.GetFighterFloat("Health")}");
+            Console.WriteLine($"{target.GetFighterName()} healed by {HPChange}.");
+            Console.WriteLine($"{saveHP} --> {target.GetFighterFloat("Health")}");
         }
         if (target.GetFighterFloat("Health") < saveHP)
         {
             Console.WriteLine($"{target.GetFighterName()} lost {HPChange} health.");
             Console.WriteLine($"{saveHP} --> {target.GetFighterFloat("Health")}");
         }
+        if (target.GetFighterFloat("Health") == saveHP)
+        {
+            Console.WriteLine("But it was already maxed!");
+        }
+        
     }
 
     public float GetPercent()
