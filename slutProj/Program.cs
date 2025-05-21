@@ -9,6 +9,10 @@ List<Hero> heroes = new()
     new Hero("Blade",5000,5000,1500,95,0,50,180,100,300,300,0),
     new Hero("Kafka",2400,2400,1800,134,0,60,150,120,200,400,0)
 };
+List<Pet> pets = new()
+{
+    new Ica("Little Ica", 10)
+};
 
 //Initialiserar lists, klasser, floats och bools.
 List<Enemy> enemies = new List<Enemy>(); 
@@ -37,7 +41,7 @@ while (gameLoop == true)
         case 1:
             occurance.OccuranceStart();
             enemies = EnemySpawner.CreateEnemies(stage);
-            BattleSystem combat = new BattleSystem(heroes, enemies);
+            BattleSystem combat = new BattleSystem(heroes, enemies,pets);
             combat.InBattle(reward);
             enemies.Clear();            
             reward.RewardBuff(1);

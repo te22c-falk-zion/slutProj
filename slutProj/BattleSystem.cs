@@ -2,6 +2,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Diagnostics.CodeAnalysis;
 
 
 public class BattleSystem 
@@ -9,13 +10,17 @@ public class BattleSystem
 
     //Initialisering.
     private List<Fighter> fighters;
+    private List<Pet> summons;
     private int skillPoints = 3;
 
-    public BattleSystem(List<Hero> heroes, List<Enemy> enemies)
+    public BattleSystem(List<Hero> heroes, List<Enemy> enemies, List<Pet> pets)
     {
         fighters = new List<Fighter>();
         fighters.AddRange(heroes);
         fighters.AddRange(enemies);
+        
+        summons = new List<Pet>();
+        summons.AddRange(pets);
 
         //Skapar AV värde för allt i fighters listan.
         foreach (Fighter f in fighters)
@@ -54,7 +59,7 @@ public class BattleSystem
 
             //Om det är herons tur gör starta HeroTurn() metoden.
             if (currentFighter is Hero hero)
-                HeroTurn(hero);
+                HeroTurn(hero,summons);
             //Annars startsa EnemyTurn() Metoden.
             else if (currentFighter is Enemy enemy)
                 EnemyTurn(enemy);
@@ -64,7 +69,7 @@ public class BattleSystem
 
 
 
-    private void HeroTurn(Hero hero)
+    private void HeroTurn(Hero hero, List<Pet> summons)
     {
         // Initialisering av floats och strings.
         Console.Clear();
@@ -183,6 +188,17 @@ public class BattleSystem
         Console.WriteLine($"Next turn goes to {nextInLine.GetFighterName()}!");
         Console.ReadLine();
         Console.Clear();
+        foreach (Pet pet in summons)
+        {
+            if (Random.Shared.Next(1,3) == 1)
+            {
+                pet.ChangeHp(target,pet.GetPercent());
+            }
+            else
+            {
+                pet.ChangeHp(hero,pet.GetPercent());
+            }
+        }
         }
     }
     private void EnemyTurn(Enemy enemy)
