@@ -14,11 +14,6 @@ public class Pet
 
     //metoder
 
-    public virtual void PetTurn()
-    {
-        //Will be overriden in subclass.
-    }
-
     public virtual void ChangeHp(Fighter target, float percent)
     {
         //Sparar herons hp innan något händer för att visa senare.
